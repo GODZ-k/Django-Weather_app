@@ -17,16 +17,21 @@ def home(request):
     if response.status_code != 200:
         # Handle the error, for example:
         return HttpResponse(f"I this your are finding your city on moon {city}")
+        # context={
+        #     'error_message': "Invalid response"
+        # }
 
     data = response.json()
-    description = data['weather'][0]['description']
-    icon = data['weather'][0]['icon']
-    temp = math.floor(data['main']['temp'])
-    wind=data['wind']['speed']
-    min_temp = math.floor(data['main']['temp_min'])
-    humidity=data['main']['humidity']
+    context={
+             "wind":data['wind']['speed'],
+             "min_temp":math.floor(data['main']['temp_min']),
+             "humidity":data['main']['humidity'],
+             "description":data['weather'][0]['description'],
+             "icon": data['weather'][0]['icon'],
+             "temp": math.floor(data['main']['temp']),
+             "day":datetime.date.today(),
+             "city": city,
 
-    day = datetime.date.today()
+             }
 
-
-    return render(request, "index.html", {"wind":wind,"min_temp":min_temp,"humidity":humidity,"description": description, "icon": icon, "temp": temp, "day": day,"city": city})
+    return render(request, "index.html",context)
