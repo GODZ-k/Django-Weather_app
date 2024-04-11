@@ -5,7 +5,7 @@ import math
 
 # Create your views here.
 def home(request):
-    city = request.POST.get('city') if 'city' in request.POST else 'indore'
+    city = request.POST.get('city') if 'city' in request.POST else 'Delhi'
     url = f'https://api.openweathermap.org/data/2.5/weather?q={city}&appid=5b474101163de7cf4d09da4ac876f9bc'
     params = {"units": "metric"}
 
